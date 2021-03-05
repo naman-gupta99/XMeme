@@ -20,3 +20,5 @@ Demo Video: [https://youtu.be/uRbvGH11KTc](https://youtu.be/uRbvGH11KTc)
 > _**Note**: To run the server using production resources set and env variable `NODE_ENV=production`_
 
 _Senstive Information is stored in a file config.js file that is saved in an online private repository that will be downloaded while running server_
+
+> \_**Note**: Sample config.js : [https://gist.github.com/naman-gupta99/c0ac87fcc1729d37def2468422de0536](https://gist.github.com/naman-gupta99/c0ac87fcc1729d37def2468422de0536)
