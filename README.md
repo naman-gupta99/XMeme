@@ -7,6 +7,7 @@ Destination for all your Memes Needs
 The project is an Instagram style website for Memes. Any user can add and edit memes on the platform.
 
 Public Link: [https://tmk-xmeme.herokuapp.com/](https://tmk-xmeme.herokuapp.com/)
+
 Demo Video: [https://youtu.be/uRbvGH11KTc](https://youtu.be/uRbvGH11KTc)
 
 ## Technical Details
