@@ -1,0 +1,21 @@
+version: "3.0"
+
+services:
+    backend:
+        build: backend
+        environment:
+            - MONGODB_URI=mongodb://database:27017/xmemedb
+        ports:
+            - "8081:8081"
+        links:
+            - database
+    swagger:
+        build: api-docs
+        ports:
+            - "8080:8080"
+        links:
+            - backend
+    database:
+        image: mongo
+        ports:
+            - "27107:27107"

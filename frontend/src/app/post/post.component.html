@@ -1,0 +1,48 @@
+<div class="row justify-content-center cont">
+  <div
+    class="col-lg-6 card border border-white post rounded"
+    style="width: 18rem"
+  >
+    <div class="d-flex card-heading">
+      <!-- Name of the creator -->
+      <h5 class="card-title title-font">{{ name }}</h5>
+      <div class="ml-auto">
+        <!-- Delete Button -->
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-danger btn-margin"
+          (click)="deletePost()"
+        >
+          <fa-icon [icon]="faTrashAlt"></fa-icon>
+        </button>
+        <!-- Edit Button -->
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-light"
+          (click)="openModal()"
+        >
+          <fa-icon [icon]="faEdit"></fa-icon>
+        </button>
+      </div>
+    </div>
+    <!-- Error Message -->
+    <div *ngIf="!validUrl" class="card border-danger">
+      <div class="card-body text-danger justify-content-center">
+        Error: Image Falied to load
+      </div>
+    </div>
+    <!-- Image Block -->
+    <img
+      *ngIf="validUrl"
+      class="card-img-top"
+      src="{{ url }}"
+      (error)="onImageError($event)"
+    />
+    <!-- Caption Block -->
+    <div class="card-body">
+      <p class="card-text">
+        {{ caption }}
+      </p>
+    </div>
+  </div>
+</div>

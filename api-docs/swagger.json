@@ -1,0 +1,295 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "XMeme API Docs",
+    "version": "1.0.0",
+    "description": "XMeme Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8081",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Memes",
+      "description": "API for Memes posted in the application"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/memes": {
+      "get": {
+        "tags": [
+          "Memes"
+        ],
+        "summary": "Get 100 most recent memes sorted in order of latest to earliest",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Posts"
+            }
+          },
+          "400": {
+            "description": "Some Error Occured",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Memes"
+        ],
+        "summary": "Post a new Meme",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "postObj",
+            "description": "Meme Object",
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "url",
+                "caption"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "caption": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Post Failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate Post Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memes/{id}": {
+      "get": {
+        "tags": [
+          "Memes"
+        ],
+        "summary": "Get meme by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID of the Meme to get",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          },
+          "404": {
+            "description": "Post not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Memes"
+        ],
+        "summary": "Patch meme by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID of the Meme to patch",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "editObj",
+            "description": "Name and Caption of Meme",
+            "schema": {
+              "type": "object",
+              "required": [
+                "url",
+                "caption"
+              ],
+              "properties": {
+                "url": {
+                  "type": "string"
+                },
+                "caption": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          },
+          "404": {
+            "description": "Post not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Memes"
+        ],
+        "summary": "Delete meme by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID of the Meme to delete",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "log": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Post": {
+      "required": [
+        "_id",
+        "name",
+        "url",
+        "caption"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        }
+      }
+    },
+    "Posts": {
+      "type": "array",
+      "$ref": "#/definitions/Post"
+    }
+  }
+}

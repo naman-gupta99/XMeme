@@ -1,0 +1,52 @@
+<!-- Navbar with website title and Refreshing the memes -->
+<nav class="navbar title fixed-top justify-content-between">
+  <h1 class="site-title">XMEME STREAM</h1>
+  <button type="button" class="btn btn-dark btn-lg" (click)="loadPosts()">
+    <fa-icon [icon]="faRedo"></fa-icon>
+  </button>
+</nav>
+
+<!-- List of Posts -->
+<div class="row content-div justify-content-center">
+  <div class="col-sm-8 card rounded">
+    <div *ngIf="posts.length == 0" class="row justify-content-center">
+      <div
+        class="card col-sm-6 border-warning text-warning justify-content-center"
+      >
+        <div class="card-body">No posts yet</div>
+      </div>
+    </div>
+    <app-post
+      *ngFor="let post of posts; index as i"
+      (onDelete)="removePost(i)"
+      (errorOccured)="changeError($event)"
+      [i]="i"
+      [id]="post.id"
+      [name]="post.name"
+      [url]="post.url"
+      [caption]="post.caption"
+    ></app-post>
+  </div>
+</div>
+
+<!-- Add Post Form Modal -->
+<app-form-modal
+  (errorOccured)="changeError($event)"
+  [posts]="posts"
+></app-form-modal>
+
+<!-- Error Alert -->
+<div *ngIf="error != ''" class="fixed-bottom col-4 ml-auto z-4">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    "{{ error }}"
+    <button
+      type="button"
+      class="close full-width"
+      data-dismiss="alert"
+      aria-label="Close"
+      (click)="changeError('')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>

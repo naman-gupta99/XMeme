@@ -1,0 +1,60 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Edit Meme</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<form #f="ngForm" [formGroup]="editForm" (ngSubmit)="onSubmit(f)">
+  <div class="modal-body">
+    <!-- Image Preview Section -->
+    <div *ngIf="editForm.controls.url.value == ''" class="card image-prev-div">
+      <div class="card-body justify-content-center">Image Preview</div>
+    </div>
+    <div
+      *ngIf="!validUrl && editForm.controls.url.value != ''"
+      class="card border-danger image-prev-div"
+    >
+      <div class="card-body text-danger justify-content-center">
+        Error: Image Falied to load
+      </div>
+    </div>
+    <div *ngIf="validUrl" class="card image-prev-div">
+      <div class="card-body justify-content-center">
+        <img
+          *ngIf="validUrl"
+          class="card-img-top"
+          src="{{ editForm.controls.url.value }}"
+          (error)="onImageError()"
+          (load)="onImageLoad()"
+        />
+      </div>
+    </div>
+    <!-- Image Url input  -->
+    <input
+      class="form-control name-input"
+      type="text"
+      placeholder="Image URL"
+      formControlName="url"
+      required
+    />
+    <!-- Caption Input -->
+    <textarea
+      class="form-control"
+      placeholder="Caption"
+      formControlName="caption"
+      required
+    ></textarea>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="close()">
+      CANCEL
+    </button>
+    <button
+      class="btn btn-outline-primary"
+      type="submit"
+      [disabled]="!editForm.valid || !validUrl"
+    >
+      EDIT
+    </button>
+  </div>
+</form>
